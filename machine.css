@@ -1,0 +1,231 @@
+
+body {
+    background-image: url("https://img.freepik.com/free-photo/magenta-concrete-textured-background-blank-space-with-vignette_53876-119885.jpg?size=626&ext=jpg&ga=GA1.1.826464180.1680675131&semt=sph");
+   background-repeat: no-repeat;
+   background-size: cover; 
+ 
+ }
+
+ form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+label {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(239, 128, 128, 0.1);
+ }
+
+button {
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(48, 50, 121);
+  color: #f8f2f2;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 25px;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+
+.vending-machine {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  align-items: center;
+  width: 100%;
+}
+
+.Cart {
+  align-items: center;
+  padding: 1px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  margin-right: 15px;
+  margin-bottom: 100px;
+
+ 
+}
+
+.Cart h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-left: 90px;
+  font-weight: bold;
+}
+
+.Cart #total {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 100px;
+}
+
+.Balance {
+  margin-top: 20px;
+}
+.Balance h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-left: 70px;
+  font-weight: bold;
+}
+
+.Balance #balance {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 100px;
+ 
+}
+
+#display{
+  padding: 4px;
+ max-width: 600px;
+ width: 600px;
+}
+
+.items{
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  
+  }
+  
+  .name{
+  padding: 5px;
+  font-size: medium;
+  font-weight: bold;
+  color:black;
+  text-shadow: #342b2b;
+  margin-bottom: 1px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+.price{
+  color:black;
+  text-shadow: #342b2b;
+  margin-bottom: 1px;
+  font-weight: bold;
+  margin-left: 25px;
+}
+.quantity{
+  color:black;
+  text-shadow: #342b2b;
+  margin-bottom: 1px;
+  font-weight: bold;
+  margin-left: 25px;
+}
+
+#coin-btn {
+  justify-content: center;
+  margin-left: 25px;
+}
+
+.coin {
+  background-color: #b6558d;
+  color: black;
+  padding: 10px;
+  border: none;
+  margin: 0 10px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 80px;
+  margin-bottom: 10px;
+}
+
+.coin:hover {
+  background-color: #d9d9d9;
+}
+
+.check {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#checkout-btn {
+  background-color: #05431d;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+ 
+}
+
+#checkout-btn:hover {
+  background-color: #3e8e41;
+}
+
+.hidden {
+  display: none;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+  @media only screen and (max-width: 390px) {
+    .vending-machine {
+      padding: 10px;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .vending-machine {
+      max-width: 100%;
+      margin-left: 10px;
+    }
+ }
+ @media only screen and (min-width: 982px) {
+  .cart{
+  flex-direction: column;
+  margin-top: 200px;
+
+  }
+}
+
+@media only screen and (max-width: 982px) {
+  .cart{
+    margin-left: 600px;
+    margin-top: 200px;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .cart{
+    margin-left: 40px;
+  }
+}

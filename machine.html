@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Shopping page</title>
+   <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="machine.css">
+
+</head>
+
+<body>
+  <div class="vending-machine">
+    <div id="display"></div>
+
+    <div class="Cart">
+      <h2>Total Price</h2>
+      <p><span id="total"> 0.00</span></p>
+
+      <div class="Balance">
+        <h3> Your Balance </h3>
+        <p><span id="balance">0.00</span></p>
+      </div>
+      <form>
+       <div id="coin-btn">
+         <button class="coin" data-value="10">
+            <span>Rs.10</span>
+          </button>
+          <button class="coin" data-value="20">
+            <span>Rs.20</span>
+          </button>
+          <button class="coin" data-value="50">
+            <span>Rs.50</span>
+          </button>
+          <button class="coin" data-value="100">
+            <span>Rs.100</span>
+          </button>
+        </div> 
+      </form>
+       <div class="check">
+      <button id="checkout-btn">Checkout</button>
+     </div> 
+    </div>
+   </div>
+  </div>
+  <div id="overlay" class="hidden">
+    <div id="popup">
+      <h2>Thank You</h2>
+      <p>Your order has been received.</p>
+    </div>
+  </div>
+  </div>
+</body>
+</html>
+
+<script>
+  function la(src) {
+    window.location=src;
+  }
+  const totalDisplay = document.querySelector("#total");
+  const balanceDisplay = document.querySelector("#balance");
+  const balanceValue = document.getElementById("balance-display");
+  const checkoutbtn = document.getElementById("checkout-btn");
+  const popup = document.getElementById("popup");
+  const overlaybtn = document.getElementById("overlay");
+  const coinButtons = document.querySelectorAll("#coin-btn button");
+  const button = document.getElementById("coin");
+  const pages=document.querySelectorAll(".pages");
+  
+  const translateAmount=0;
+
+
+
+  let translate=0;
+  let total = 0;
+  let balance = 0;
+  let checkarray = [];
+
+
+
+
+  fetch("http://localhost:8081/items")
+    .then((response) => response.json())
+    .then((data) => {
+      const itemcontainer = document.getElementById("display");
+
+      data.forEach((item) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("items");
+
+        slide=(direction)=>{}
+        const itemImg = document.createElement("img");
+        itemImg.src = item.image;
+        itemImg.style.width = "220px";
+        itemImg.style.height = "220px";
+        itemDiv.appendChild(itemImg);
+        itemImg.className = "images";
+
+        const itemname = document.createElement("h2")
+        itemname.textContent = item.name;
+        itemDiv.appendChild(itemname);
+        itemname.className = "name";
+
+        const itemprice = document.createElement("p");
+        itemprice.textContent = `price: ${item.price}`;
+        itemprice.className = "price";
+        itemDiv.appendChild(itemprice);
+
+        const itemQty = document.createElement("p");
+        itemQty.textContent = `Quantity: ${item.quantity}`;
+        itemQty.className = "quantity";
+        itemDiv.appendChild(itemQty);
+
+        const itemBtn = document.createElement("button");
+        itemBtn.classList.add("item.btn");
+        itemBtn.dataset.price = item.price;
+        itemBtn.textContent = "Buy";
+        itemDiv.appendChild(itemBtn);
+      
+
+        itemBtn.addEventListener("click", () => {
+          const price = parseFloat(item.price);
+
+          if (balance >= price) {
+            
+
+            alert(`you bought ${item.name} ${item.price}`);
+            total += price;
+            totalDisplay.textContent = `Total: Rs. ${total}`;
+
+            balance -= price;
+            balanceDisplay.textContent = `Balance: Rs. ${balance}`;
+
+            item.quantity -= 1;
+            itemQty.textContent = `Quantity: ${item.quantity}`;
+
+            if (item.quantity === 0) {
+              Buybutton.style.display = "none"
+            }
+            
+
+            const itemdata = {
+              name: item.name,
+              img: item.image,
+              price: item.price };
+
+            if (!checkarray.includes(itemdata)) {
+              checkarray.push(itemdata);
+            }
+
+          } else {
+            alert("You do not have enough balance to buy");
+          }
+        });
+
+        itemcontainer.appendChild(itemDiv);
+      });
+    })
+    .catch((error) => {
+      console.log('Error fetching data', error);
+    });
+
+  if (coinButtons) {
+    coinButtons.forEach((coinBtn) => {
+      coinBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const coinValue = parseInt(coinBtn.getAttribute("data-value"));
+        balance += coinValue;
+        balanceDisplay.innerHTML = `Balance: Rs.${balance}`;
+      });
+    });
+  }
+
+  checkoutbtn.addEventListener("click", () => {
+    overlaybtn.classList.remove('hidden')
+
+    const popup = document.getElementById('popup');
+
+    let totalprice = 0;
+
+    const itemCounts = {};
+
+    checkarray.forEach((itemdata) => {
+      if (!itemCounts[itemdata.name]) {
+        itemCounts[itemdata.name] = 1;
+
+      } else {
+        itemCounts[itemdata.name]++;
+      }
+    });
+
+    for (const itemName in itemCounts) {
+      const itemCount = itemCounts[itemName];
+      const itemdata = checkarray.find((item) => item.name === itemName);
+
+
+      const itemImg = document.createElement("img");
+      itemImg.src = itemdata.img;
+      itemImg.style.width = "60px";
+      itemImg.style.height = "50px";
+      popup.appendChild(itemImg);
+
+      const Para = document.createElement('p')
+      Para.textContent = `itemName: ${itemName}`;
+      popup.appendChild(Para);
+
+      const Para1 = document.createElement("p");
+      Para1.textContent = `itemquantity: ${itemCount}`;
+      popup.appendChild(Para1);
+
+}
+      const itemTotalPrice = itemdata.price * itemCount;
+      totalprice += itemTotalPrice;
+
+    const itemtotalPricePara = document.createElement('p');
+    itemtotalpricePara.textContent = "Total :" + totalPrice;
+    popup.appendChild(itemtotalPricePara);
+
+    const popupContainer = document.getElementById('popup-container');
+  popupContainer.classList.remove('hidden');
+
+
+  });
+
+
+
+
+</script>
